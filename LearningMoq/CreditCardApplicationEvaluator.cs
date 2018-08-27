@@ -14,7 +14,7 @@ namespace LearningMoq
 
         public CreditCardApplicationEvaluator(IFrequentFlierNumberService validator)
         {
-            this._validator = validator;
+            this._validator = validator ?? throw new ArgumentNullException(nameof(validator));
         }
 
         public CreditCardApplicationDecision Evaluate(CreditCardApplication creditCardApplication)
@@ -23,13 +23,9 @@ namespace LearningMoq
             {
                 return CreditCardApplicationDecision.AutoAccepted;
             }
-
-            if (creditCardApplication.GrossSalary < LowIncomeThreshold)
-            {
-                return CreditCardApplicationDecision.AutoDeclined;
-            }
-
-            if (_validator.isValid(creditCardApplication.FrequentFlierNumber))
+            
+            //This results in NRE
+            if (!_validator.isValid(creditCardApplication.FrequentFlierNumber))
             {
                 return CreditCardApplicationDecision.ReferredToHuman;
             }
@@ -37,6 +33,11 @@ namespace LearningMoq
             if (creditCardApplication.Age < AutoReferralAge)
             {
                 return CreditCardApplicationDecision.ReferredToHuman;
+            }
+
+            if (creditCardApplication.GrossSalary < LowIncomeThreshold)
+            {
+                return CreditCardApplicationDecision.AutoDeclined;
             }
 
             return CreditCardApplicationDecision.ReferredToHuman;
