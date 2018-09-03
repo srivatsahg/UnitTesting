@@ -8,5 +8,6 @@ namespace LearningMoq
     {
         bool isValid(string frequentFlierNumber);
         void isValid(string frequentFlierNumber,out bool isValid);
+        string LicenseKey { get; }
     }
 }

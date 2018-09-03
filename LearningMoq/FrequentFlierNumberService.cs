@@ -6,6 +6,8 @@ namespace LearningMoq
 {
     public class FrequentFlierNumberService : IFrequentFlierNumberService
     {
+        public string LicenseKey => throw new NotImplementedException();
+
         public bool isValid(string frequentFlierNumber)
         {
             throw new NotImplementedException();
@@ -15,5 +17,6 @@ namespace LearningMoq
         {
             throw new NotImplementedException();
         }
+
     }
 }
